@@ -1,0 +1,49 @@
+import java.util.*;
+class Solution {
+    public String reverseWords(String s) {
+        //Approach 1 : TC:O(n) SC:O(n)
+        //Split methid TC:O(n)
+        // + is used for multiple spaces denoted any no of spaces
+        String[] words = s.split(" +");
+        StringBuilder sb = new StringBuilder();
+        int n = words.length;
+  
+        for(int j=n-1; j>=0; j--){
+            //append method TC:O(1)
+            sb.append(words[j]);
+            sb.append(" ");
+        }
+        // trim removes leading and traling spaces fro str with TC:O(n)
+        //The trim() method doesn’t eliminate middle spaces.
+        return sb.toString().trim(); 
+
+        
+        //Approach 2 : TC:O(n) SC:O(1)
+        int n = s.length();
+        int i = 0;
+        String ansStr = "";
+
+        while(i < n){
+            String tempStr = "";
+
+            while( i < n && s.charAt(i) == ' '){
+                i++;
+            }
+
+            while( i < n && s.charAt(i) != ' '){
+                tempStr += s.charAt(i)+"";
+                i++;
+            }
+
+            if(tempStr.length() > 0){
+                if(ansStr.length() == 0){
+                    ansStr = tempStr;
+                }else{
+                    ansStr = tempStr+" "+ansStr;
+                }
+            }
+        }
+
+        return ansStr;
+    }
+}
