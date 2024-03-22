@@ -1,25 +1,46 @@
-3-Month Coding Challenge!!!
+class Solution {
+    public String longestPrefix(String s) {
 
-Week-4: Day-4
+        //Approach 1: TC:O(n) SC:O(1)
 
-Problem Statement: Longest Happy Prefix
+        int n = s.length();
+        String ans = "", s1 = "", s2 = "";
 
-Given:
+        for(int i=0; i<n-1; i++){
+            s1 += s.charAt(i)+"";
+            if((n-i-1) > 0){
+                s2 = s.charAt(n-i-1)+""+s2;
+            }
+            if(s1.equals(s2)){
+                ans = s1;
+            }
+        }
 
-Problem Link: 
+        return ans;
 
-GitHub Link: https: https://github.com/Bfatima5711/Strings 
 
-Thanks to, raj vikramaditya 🤗 
 
-#datastructuresandalgorithms #javacoding #javadevelopment #codingchallenge #java8 #leedcode #leedcodecontest #dsa #geeksforgeeks #problemsolving #strings
+        //Approach 2: TC:O(n) SC:O(n)
+        int n = s.length();
+        int max = 0, i = 1;
+        char[] str = s.toCharArray();
+        int[] ans = new int[n];
 
-//Medium level : question 1
+        while(i<n){
+            if(str[max] == str[i]){
+                max++;
+                ans[i] = max;
+                i++;
+            }else{
+                if(max > 0){
+                    max = ans[max - 1];
+                }else{
+                    i++;
+                }
+            }
+        }
 
-Problem Statement: Longest Happy Prefix
+        return s.substring(0, ans[n-1]);
 
-Given:
-
-Problem Link: 
-
-Note: for code check attached file with name Longest Happy Prefix
+    }
+}
