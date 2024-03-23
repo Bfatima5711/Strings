@@ -91,6 +91,29 @@ There is at least one word in s.
 Problem Link: https://leetcode.com/problems/reverse-words-in-a-string/description/
 
 Note: for code check attached file with name Reverse Words in a String
+//Medium level : question 2
+
+Problem Statement: Longest Palindromic Substring
+
+Given:
+Given a string s, return the longest palindromic substring in s.
+
+Example 1:
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+
+Example 2:
+Input: s = "cbbd"
+Output: "bb"
+ 
+Constraints:
+1 <= s.length <= 1000
+s consist of only digits and English letters.
+
+Problem Link: https://leetcode.com/problems/longest-palindromic-substring/
+
+Note: for code check attached file with name Longest Palindromic Substring
 
 //Hard level : question 1
 
