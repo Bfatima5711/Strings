@@ -1,0 +1,67 @@
+class Solution {
+    public String checkPalindromeFromCenter(String s, int left, int right){
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+            left--;
+            right++;
+        }
+
+        return s.substring(left+1, right);
+    }
+    public boolean isPalindrom(String s, int i, int j){
+        while(i<=j){
+            if(s.charAt(i++) != s.charAt(j--)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public String longestPalindrome(String s) {
+        //Approach 1: TC:O(n^3) SC:O(1)
+
+        int n = s.length(), longStr = 0;
+        String ans = "", res = "";
+
+        for(int i=0; i<n; i++){
+            for(int j=i; j<n; j++){
+                if(isPalindrom(s, i, j)){
+                   if(j<n-1){
+                        res = s.substring(i, j+1);
+                   }
+                   else{
+                        res = s.substring(i);
+                   }
+                   
+                   if(longStr<res.length()){
+                        ans = res;
+                        longStr = res.length();
+                   }
+                }
+            }
+        }
+        return ans;
+
+        
+
+        //Approach 2: TC:O(n^2) SC:O(1)
+
+        int n = s.length();
+        if(n <= 1){
+            return s;
+        }
+        String maxLngStr = s.substring(0, 1);
+
+        for(int i=0; i<n-1; i++){
+            String odd = checkPalindromeFromCenter(s, i, i);
+            String even = checkPalindromeFromCenter(s, i, i+1);
+
+            if(maxLngStr.length() < odd.length()){
+                maxLngStr = odd;
+            }
+
+            if(maxLngStr.length() < even.length()){
+                maxLngStr = even;
+            }
+        }
+        return maxLngStr;
+}
+}
