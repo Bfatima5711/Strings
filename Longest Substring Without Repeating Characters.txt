@@ -1,0 +1,86 @@
+*********Problem Statement*********
+*******Longest Substring Without Repeating Characters*********
+
+Given a string s, find the length of the longest 
+substring
+ without repeating characters.
+
+ 
+
+Example 1:
+
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+Example 2:
+
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+Example 3:
+
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+ 
+
+Constraints:
+
+0 <= s.length <= 5 * 104
+s consists of English letters, digits, symbols and spaces.
+
+*********Code*********
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        //Approach 1: TC: O(n^3) SC:O(1)
+        int n = s.length();
+        int maxLen = 0;
+        for(int i = 0; i < n; i++){
+            String ans = "";
+            for(int j = i; j < n; j++){
+                if(ans.contains(s.charAt(j)+"")){ // contain method TC:O(n)
+                    maxLen = Math.max(maxLen, ans.length());
+                    break;
+                }else{
+                    ans += s.charAt(j)+"";
+                    maxLen = Math.max(maxLen, ans.length());
+                }
+            }
+        }
+        return maxLen;
+
+        //Approach 2: TC: O(n^2) SC:O(256)
+        int n = s.length();
+        int maxLen = 0;
+        for(int i = 0; i < n; i++){
+            int[] hash = new int[256];
+            for(int j = i; j < n; j++){
+                if(hash[s.charAt(j)] == 1) break;
+                int len = j - i + 1;
+                maxLen = Math.max(maxLen, len);
+                hash[s.charAt(j)]++;
+            }
+        }
+        return maxLen;
+
+        //Approach 3: TC: O(n) SC:O(n)
+
+        HashMap<Character, Integer> map = new HashMap<>();
+        int right = 0, left = 0, maxLen = 0;
+        int n = s.length();
+
+        while(right < n){
+            if(map.containsKey(s.charAt(right))){
+                left = Math.max(map.get(s.charAt(right))+1, left);
+            }
+
+            map.put(s.charAt(right), right);
+            maxLen = Math.max(maxLen, right - left + 1);
+
+            right++;
+        }
+        return maxLen;
+    }
+}
