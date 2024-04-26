@@ -1,0 +1,115 @@
+********Problem Statement*********
+******Number of Substrings Containing All Three Characters*******
+
+Given a string s consisting only of characters a, b and c.
+
+Return the number of substrings containing at least one occurrence of all these characters a, b and c.
+
+ 
+
+Example 1:
+
+Input: s = "abcabc"
+Output: 10
+Explanation: The substrings containing at least one occurrence of the characters a, b and c are "abc", "abca", "abcab", "abcabc", "bca", "bcab", "bcabc", "cab", "cabc" and "abc" (again). 
+Example 2:
+
+Input: s = "aaacb"
+Output: 3
+Explanation: The substrings containing at least one occurrence of the characters a, b and c are "aaacb", "aacb" and "acb". 
+Example 3:
+
+Input: s = "abc"
+Output: 1
+ 
+
+Constraints:
+
+3 <= s.length <= 5 x 10^4
+s only consists of a, b or c characters.
+
+*******Code*********
+
+class Solution {
+    public boolean isContains(String s,int[] hash,int i,int j){
+        for(int k = i; k <= j; k++){
+            hash[s.charAt(k)-'a']++;
+        }
+        int cnt = 0;
+        for(int k = 0; k < 3; k++){
+            if(hash[k] > 0){
+                cnt++;
+            }
+        }
+
+        if(cnt == 3){
+            return true;
+        }
+        return false;
+    }
+    public int numberOfSubstrings(String s) {
+        //Approach 1: TC(n^3) SC:O(1)
+        int n = s.length();
+        int cnt = 0;
+        if(n<3) return 0;
+
+        for(int i = 0; i < n; i++){
+            int[] hash = new int[3];
+            for(int j = i + 1; j < n; j++){
+                if(isContains(s, hash, i, j)){
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+
+        // //Approach 2: TC(n^2) SC:O(1)
+        int n = s.length();
+        int cnt = 0;
+        if(n<3) return 0;
+
+        for(int i = 0; i < n; i++){
+            int[] hash = new int[3];
+            for(int j = i; j < n; j++){
+                hash[s.charAt(j) - 'a'] = 1;
+
+                if(hash[0] + hash[1] + hash[2] == 3){
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+
+        //Slght optimization in approach 2 it is better thatn approach to
+        //Approach 2: TC(n^2) SC:O(1)
+        int n = s.length();
+        int cnt = 0;
+        if(n<3) return 0;
+
+        for(int i = 0; i < n; i++){
+            int[] hash = new int[3];
+            for(int j = i; j < n; j++){
+                hash[s.charAt(j) - 'a'] = 1;
+
+                if(hash[0] + hash[1] + hash[2] == 3){
+                    cnt = cnt + (n-j);
+                    break;
+                }
+            }
+        }
+        return cnt;
+
+        //Approach 3: TC(n) SC:O(1)
+        int n = s.length();
+        int cnt = 0;
+        int[] hash = new int[3];
+        Arrays.fill(hash, -1);
+
+        for(int i = 0; i < n; i++){
+            hash[s.charAt(i)-'a'] = i;
+            int mini = Math.min(hash[0], Math.min(hash[1], hash[2]));
+            cnt += (1 + mini);
+        }
+        return cnt;
+    }
+}
