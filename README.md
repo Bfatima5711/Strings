@@ -1,7 +1,7 @@
 # Strings
 Strings_DSA_questions  
 
-//Easy level : question 1
+//Easy level : question 1 
 
 Problem Statement: Remove Outermost Parentheses
 
